@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 0.7,
+  "ingredient": {
+    "item": "winterskyblock:coal_dust"
+  },
+  "result": "minecraft:coal"
+}

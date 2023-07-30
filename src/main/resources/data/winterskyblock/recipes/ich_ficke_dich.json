@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S#",
+    "SFS",
+    "#S#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:coal_block"
+    },
+    "S": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "F": {
+      "item": "minecraft:snowball"
+    }
+  },
+  "result": {
+    "item": "winterskyblock:music_disc_haftbefehl",
+    "count": 1
+  }
+}

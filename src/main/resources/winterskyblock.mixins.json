@@ -1,0 +1,28 @@
+{
+  "required": true,
+  "package": "de.crafty.winterskyblock.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "winterskyblock.refmap.json",
+  "mixins": [
+    "net.minecraft.core.dispenser.MixinShearsDispenseItemBehavior",
+    "net.minecraft.server.level.MixinServerLevel",
+    "net.minecraft.server.network.MixinServerGamePacketListenerImpl",
+    "net.minecraft.world.entity.MixinSpawnPlacements",
+    "net.minecraft.world.entity.animal.MixinAnimal",
+    "net.minecraft.world.entity.animal.MixinSheep",
+    "net.minecraft.world.item.enchantment.MixinEnchantment",
+    "net.minecraft.world.level.block.MixinBlock",
+    "net.minecraft.world.level.block.MixinComposterBlock",
+    "net.minecraft.world.level.block.MixinComposterInputContainer",
+    "net.minecraft.world.level.block.MixinLeavesBlock",
+    "net.minecraft.world.level.chunk.MixinChunkGenerators",
+    "net.minecraft.world.level.dimension.end.MixinEndDragonFight",
+    "net.minecraft.world.level.levelgen.MixinPhantomSpawner",
+    "net.minecraft.world.level.levelgen.presets.MixinWorldPresets",
+    "net.minecraft.world.level.material.MixinFlowingFluid"
+  ],
+  "client": [
+    "net.minecraft.client.gui.screens.worldselection.MixinCreateWorldScreen"
+  ],
+  "minVersion": "0.8"
+}

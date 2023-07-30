@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "activity_state=0": {
+      "model": "winterskyblock:block/magical_workbench_0"
+    },
+    "activity_state=1": {
+      "model": "winterskyblock:block/magical_workbench_1"
+    },
+    "activity_state=2": {
+      "model": "winterskyblock:block/magical_workbench_2"
+    }
+  }
+}

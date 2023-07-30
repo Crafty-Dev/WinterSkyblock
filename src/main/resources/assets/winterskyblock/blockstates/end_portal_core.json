@@ -1,0 +1,47 @@
+{
+  "variants": {
+    "active=true,charge=12": {
+      "model": "winterskyblock:block/end_portal_core_active"
+    },
+    "active=false,charge=12": {
+      "model": "winterskyblock:block/end_portal_core_12"
+    },
+    "active=false,charge=0": {
+      "model": "winterskyblock:block/end_portal_core"
+    },
+    "active=false,charge=1": {
+      "model": "winterskyblock:block/end_portal_core_1"
+    },
+    "active=false,charge=2": {
+      "model": "winterskyblock:block/end_portal_core_2"
+    },
+    "active=false,charge=3": {
+      "model": "winterskyblock:block/end_portal_core_3"
+    },
+    "active=false,charge=4": {
+      "model": "winterskyblock:block/end_portal_core_4"
+    },
+    "active=false,charge=5": {
+      "model": "winterskyblock:block/end_portal_core_5"
+    },
+    "active=false,charge=6": {
+      "model": "winterskyblock:block/end_portal_core_6"
+    },
+    "active=false,charge=7": {
+      "model": "winterskyblock:block/end_portal_core_7"
+    },
+    "active=false,charge=8": {
+      "model": "winterskyblock:block/end_portal_core_8"
+    },
+    "active=false,charge=9": {
+      "model": "winterskyblock:block/end_portal_core_9"
+    },
+    "active=false,charge=10": {
+      "model": "winterskyblock:block/end_portal_core_10"
+    },
+    "active=false,charge=11": {
+      "model": "winterskyblock:block/end_portal_core_11"
+    }
+
+  }
+}

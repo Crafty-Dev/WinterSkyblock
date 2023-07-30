@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "winterskyblock:diamond_ore_dust"
+    }
+  },
+  "result": {
+    "item": "winterskyblock:diamond_dust",
+    "count": 1
+  }
+}

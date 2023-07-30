@@ -1,0 +1,5 @@
+{   "parent": "winterskyblock:block/end_portal_core",
+  "textures": {
+    "top": "winterskyblock:block/end_portal_core_12"
+  }
+}

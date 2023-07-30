@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "winterskyblock:item/music_disc_all_i_want_for_christmas"
+  }
+}

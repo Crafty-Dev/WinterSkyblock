@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "S#S",
+    "SSS"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stone"
+    },
+    "S": {
+      "item": "winterskyblock:coal_dust"
+    }
+  },
+  "result": {
+    "item": "minecraft:coal_ore",
+    "count": 1
+  }
+}

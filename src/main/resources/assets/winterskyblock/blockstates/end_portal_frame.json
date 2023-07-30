@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "filled=false": {
+      "model": "winterskyblock:block/end_portal_frame"
+    },
+    "filled=true": {
+      "model": "winterskyblock:block/end_portal_frame_filled"
+    }
+  }
+}

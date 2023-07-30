@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "winterskyblock:redstone_ore_dust"
+    }
+  },
+  "result": {
+    "item": "minecraft:redstone",
+    "count": 1
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "top": "winterskyblock:block/end_portal_core_0",
+    "side": "winterskyblock:block/end_portal_core_side",
+    "particle": "#side",
+    "up": "#top",
+    "down": "#side",
+    "north": "#side",
+    "east": "#side",
+    "south": "#side",
+    "west": "#side"
+  }
+}

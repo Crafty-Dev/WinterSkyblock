@@ -1,0 +1,62 @@
+{
+  "music_disc.last_christmas": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "winterskyblock:records/last_christmas",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitles.winterskyblock.music_disc.last_christmas"
+  },
+  "music_disc.all_i_want_for_christmas": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "winterskyblock:records/all_i_want_for_christmas",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitles.winterskyblock.music_disc.all_i_want_for_christmas"
+  },
+  "music_disc.driving_home_for_christmas": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "winterskyblock:records/driving_home_for_christmas",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitles.winterskyblock.music_disc.driving_home_for_christmas"
+  },
+  "music_disc.its_beginning_to_look": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "winterskyblock:records/its_beginning_to_look",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitles.winterskyblock.music_disc.its_beginning_to_look"
+  },
+  "music_disc.underneath_the_tree": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "winterskyblock:records/underneath_the_tree",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitles.winterskyblock.music_disc.underneath_the_tree"
+  },
+  "music_disc.haftbefehl": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "winterskyblock:records/haftbefehl",
+        "stream": true
+      }
+    ],
+    "subtitle": "subtitles.winterskyblock.music_disc.haftbefehl"
+  }
+}

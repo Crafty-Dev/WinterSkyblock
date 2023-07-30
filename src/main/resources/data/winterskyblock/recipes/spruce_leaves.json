@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#S#",
+        "S#S",
+        "#S#"
+    ],
+    "key": {
+        "#": {
+            "item": "winterskyblock:spruce_leaf"
+        },
+        "S": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": {
+        "item": "minecraft:spruce_leaves",
+        "count": 1
+    }
+}

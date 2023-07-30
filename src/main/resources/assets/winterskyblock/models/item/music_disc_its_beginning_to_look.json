@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "winterskyblock:item/music_disc_its_beginning_to_look"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "S#S",
+    "SSS"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:deepslate"
+    },
+    "S": {
+      "item": "winterskyblock:iron_dust"
+    }
+  },
+  "result": {
+    "item": "minecraft:deepslate_iron_ore",
+    "count": 1
+  }
+}

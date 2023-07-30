@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S#",
+    "SFS",
+    "#S#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:emerald"
+    },
+    "S": {
+      "item": "minecraft:diamond"
+    },
+    "F": {
+      "item": "minecraft:snowball"
+    }
+  },
+  "result": {
+    "item": "winterskyblock:music_disc_last_christmas",
+    "count": 1
+  }
+}

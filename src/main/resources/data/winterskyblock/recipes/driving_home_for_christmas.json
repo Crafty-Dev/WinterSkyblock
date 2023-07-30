@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S#",
+    "SFS",
+    "#S#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:spruce_sapling"
+    },
+    "S": {
+      "item": "minecraft:emerald"
+    },
+    "F": {
+      "item": "minecraft:minecart"
+    }
+  },
+  "result": {
+    "item": "winterskyblock:music_disc_driving_home_for_christmas",
+    "count": 1
+  }
+}
