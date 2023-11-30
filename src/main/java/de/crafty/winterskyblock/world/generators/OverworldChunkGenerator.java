@@ -209,4 +209,5 @@ public class OverworldChunkGenerator extends NoiseBasedChunkGenerator {
     protected Codec<? extends ChunkGenerator> codec() {
         return CODEC;
     }
+
 }

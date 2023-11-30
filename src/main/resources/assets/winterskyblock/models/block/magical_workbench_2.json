@@ -1,16 +1,10 @@
 {
-  "parent": "block/cube",
+  "parent": "block/orientable",
   "textures": {
     "top": "winterskyblock:block/magical_workbench_top",
     "side": "winterskyblock:block/magical_workbench_side",
     "front": "winterskyblock:block/magical_workbench_front_2",
     "back": "winterskyblock:block/magical_workbench_back",
-    "particle": "#side",
-    "up": "#top",
-    "down": "#side",
-    "north": "#front",
-    "east": "#side",
-    "south": "#side",
-    "west": "#side"
+    "particle": "#side"
   }
 }

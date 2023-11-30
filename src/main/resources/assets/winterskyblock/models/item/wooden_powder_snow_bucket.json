@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "winterskyblock:item/wooden_powder_snow_bucket"
+  }
+}

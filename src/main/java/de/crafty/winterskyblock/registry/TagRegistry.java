@@ -23,6 +23,8 @@ public class TagRegistry {
     public static final TagKey<Item> NETHER_WHEAT = ItemTags.create(new ResourceLocation(WinterSkyblock.MODID, "nether_wheat"));
 
     //Biomes
+    public static final TagKey<Biome> IS_SWAMP_OR_PLAINS = BiomeTags.create("is_swamp_or_plains");
+    public static final TagKey<Biome> IS_MANGROVE = BiomeTags.create("is_mangrove");
     public static final TagKey<Biome> IS_BIRCH_FOREST = BiomeTags.create("is_birch_forest");
     public static final TagKey<Biome> IS_CRIMSON = BiomeTags.create("is_crimson");
     public static final TagKey<Biome> IS_WARPED = BiomeTags.create("is_warped");

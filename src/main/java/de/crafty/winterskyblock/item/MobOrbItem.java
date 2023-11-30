@@ -110,7 +110,7 @@ public class MobOrbItem extends Item {
         ItemStack orbStack = new ItemStack(ItemRegistry.MOB_ORB_ACTIVE.get());
         orbStack.addTagElement("savedEntity", entityTag);
 
-        System.out.println("Saved: " + orbStack.getTag().getCompound("savedEntity"));
+        //System.out.println("Saved: " + orbStack.getTag().getCompound("savedEntity"));
 
         return orbStack;
     }
@@ -148,7 +148,9 @@ public class MobOrbItem extends Item {
         }
 
         lore.add(Component.translatable(savedEntity.getDescriptionId()).withStyle(ChatFormatting.DARK_PURPLE));
-        lore.add(Component.literal(stack.getOrCreateTag().getCompound("savedEntity").getFloat("Health") + " Health").withStyle(ChatFormatting.RED));
+
+        if(stack.getOrCreateTag().getCompound("savedEntity").contains("Health"))
+            lore.add(Component.literal(stack.getOrCreateTag().getCompound("savedEntity").getFloat("Health") + " Health").withStyle(ChatFormatting.RED));
 
     }
 }

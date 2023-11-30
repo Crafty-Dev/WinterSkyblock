@@ -1,8 +1,7 @@
-package de.crafty.winterskyblock.structure;
+package de.crafty.winterskyblock.structure.nature_island;
 
 import com.mojang.serialization.Codec;
 import de.crafty.winterskyblock.registry.StructureRegistry;
-import de.crafty.winterskyblock.structure.piece.NatureIslandPiece;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -10,12 +9,18 @@ import net.minecraft.data.worldgen.features.CaveFeatures;
 import net.minecraft.data.worldgen.features.NetherFeatures;
 import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BambooLeaves;
@@ -229,12 +234,67 @@ public abstract class NatureIslandStructure extends Structure {
 
 
         if (piece.getType().equals(StructureRegistry.END_ISLAND.pieces()[0])) {
-            if(rand.nextFloat() < 0.1F)
+            if (rand.nextFloat() < 0.1F)
                 Feature.END_GATEWAY.place(EndGatewayConfiguration.delayedExitSearch(), level, level.getLevel().getChunkSource().getGenerator(), rand, new BlockPos(rand.nextBoolean() ? (boundingBox.minX() + 1) : (boundingBox.maxX() - 1), location.getY() + 15, rand.nextBoolean() ? (boundingBox.minZ() + 1) : (boundingBox.maxZ() - 1)));
 
         }
 
-}
+
+        //Animals
+        MobSpawnSettings spawnSettings = biome.get().getMobSettings();
+        WeightedRandomList<MobSpawnSettings.SpawnerData> randList = spawnSettings.getMobs(MobCategory.CREATURE);
+
+        if (randList.isEmpty() || piece.getTopBlocks().isEmpty())
+            return;
+
+        Optional<MobSpawnSettings.SpawnerData> optional = randList.getRandom(rand);
+        if (optional.isEmpty())
+            return;
+
+        MobSpawnSettings.SpawnerData spawnerData = optional.get();
+        int min = 1;
+        int max = Mth.clamp(spawnerData.maxCount, min, 3);
+
+        int amount = min + rand.nextInt(1 + max - min);
+
+        SpawnGroupData spawngroupdata = null;
+
+        for (int i = 0; i < amount; i++) {
+
+            boolean success = false;
+
+            for (int j = 0; !success && j < 4; j++) {
+
+                BlockPos spawnPos = piece.getTopBlocks().get(rand.nextInt(piece.getTopBlocks().size())).above();
+                if (spawnerData.type.canSummon() && NaturalSpawner.isSpawnPositionOk(SpawnPlacements.getPlacementType(spawnerData.type), level, spawnPos, spawnerData.type)) {
+                    float f = spawnerData.type.getWidth();
+                    if (!level.noCollision(spawnerData.type.getAABB(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ())) || !SpawnPlacements.checkSpawnRules(spawnerData.type, level, MobSpawnType.STRUCTURE, spawnPos, level.getRandom())) {
+                        continue;
+                    }
+
+
+                    Entity entity = spawnerData.type.create(level.getLevel());
+
+                    if(entity == null)
+                        continue;
+
+                     entity.moveTo(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), rand.nextFloat() * 360.0F, 0.0F);
+                    if (entity instanceof Mob) {
+                        Mob mob = (Mob)entity;
+                        if (net.minecraftforge.common.ForgeHooks.canEntitySpawn(mob, level, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), null, MobSpawnType.STRUCTURE) == -1) continue;
+                        if (mob.checkSpawnRules(level, MobSpawnType.STRUCTURE) && mob.checkSpawnObstruction(level)) {
+                            spawngroupdata = mob.finalizeSpawn(level, level.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.STRUCTURE, spawngroupdata, (CompoundTag)null);
+                            level.addFreshEntityWithPassengers(mob);
+                            success = true;
+                        }
+                    }
+                }
+
+            }
+        }
+
+
+    }
 
 
     private void genEndPost(WorldGenLevel level, BlockPos pos, RandomSource rand) {
@@ -242,13 +302,13 @@ public abstract class NatureIslandStructure extends Structure {
         level.setBlock(pos, Blocks.STONE_BRICK_WALL.defaultBlockState(), 3);
         level.setBlock(pos.above(), Blocks.SOUL_LANTERN.defaultBlockState(), 3);
 
-        for(int xOff = -1; xOff <= 1; xOff++){
-            for(int zOff = -1; zOff <= 1; zOff++){
+        for (int xOff = -1; xOff <= 1; xOff++) {
+            for (int zOff = -1; zOff <= 1; zOff++) {
 
-                for(int yOff = -2; yOff < 0; yOff++){
+                for (int yOff = -2; yOff < 0; yOff++) {
                     BlockPos p = pos.offset(xOff, yOff, zOff);
 
-                    if(rand.nextFloat() < 0.5F && !level.getBlockState(p).isAir())
+                    if (rand.nextFloat() < 0.5F && !level.getBlockState(p).isAir())
                         level.setBlock(p, rand.nextBoolean() ? Blocks.SOUL_SAND.defaultBlockState() : Blocks.STONE_BRICKS.defaultBlockState(), 3);
                 }
 
@@ -331,254 +391,254 @@ public abstract class NatureIslandStructure extends Structure {
     }
 
 
-public static class Desert extends NatureIslandStructure {
+    public static class Desert extends NatureIslandStructure {
 
 
-    public static final Codec<Desert> CODEC = simpleCodec(Desert::new);
+        public static final Codec<Desert> CODEC = simpleCodec(Desert::new);
 
-    public Desert(StructureSettings settings) {
-        super(settings);
+        public Desert(StructureSettings settings) {
+            super(settings);
+        }
+
+        @Override
+        protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+            return new NatureIslandPiece.Desert(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+        }
+
+        @Override
+        public @NotNull StructureType<?> type() {
+            return StructureRegistry.DESERT_ISLAND.structureType();
+        }
+
+
     }
 
-    @Override
-    protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
-        return new NatureIslandPiece.Desert(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+    public static class Savanna extends NatureIslandStructure {
+
+
+        public static final Codec<Savanna> CODEC = simpleCodec(Savanna::new);
+
+        public Savanna(StructureSettings settings) {
+            super(settings);
+        }
+
+        @Override
+        protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+            return new NatureIslandPiece.Savanna(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+        }
+
+        @Override
+        public @NotNull StructureType<?> type() {
+            return StructureRegistry.SAVANNA_ISLAND.structureType();
+        }
+
+
     }
 
-    @Override
-    public @NotNull StructureType<?> type() {
-        return StructureRegistry.DESERT_ISLAND.structureType();
+    public static class Jungle extends NatureIslandStructure {
+
+
+        public static final Codec<Jungle> CODEC = simpleCodec(Jungle::new);
+
+        public Jungle(StructureSettings settings) {
+            super(settings);
+        }
+
+        @Override
+        protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+            return new NatureIslandPiece.Jungle(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+        }
+
+        @Override
+        public @NotNull StructureType<?> type() {
+            return StructureRegistry.JUNGLE_ISLAND.structureType();
+        }
+
+
     }
 
-
-}
-
-public static class Savanna extends NatureIslandStructure {
+    public static class Spruce extends NatureIslandStructure {
 
 
-    public static final Codec<Savanna> CODEC = simpleCodec(Savanna::new);
+        public static final Codec<Spruce> CODEC = simpleCodec(Spruce::new);
 
-    public Savanna(StructureSettings settings) {
-        super(settings);
+        public Spruce(StructureSettings settings) {
+            super(settings);
+        }
+
+        @Override
+        protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+            return new NatureIslandPiece.Spruce(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+        }
+
+        @Override
+        public @NotNull StructureType<?> type() {
+            return StructureRegistry.SPRUCE_ISLAND.structureType();
+        }
+
+
     }
 
-    @Override
-    protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
-        return new NatureIslandPiece.Savanna(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+    public static class Oak extends NatureIslandStructure {
+
+
+        public static final Codec<Oak> CODEC = simpleCodec(Oak::new);
+
+        public Oak(StructureSettings settings) {
+            super(settings);
+        }
+
+        @Override
+        protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+            return new NatureIslandPiece.Oak(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+        }
+
+        @Override
+        public @NotNull StructureType<?> type() {
+            return StructureRegistry.OAK_ISLAND.structureType();
+        }
     }
 
-    @Override
-    public @NotNull StructureType<?> type() {
-        return StructureRegistry.SAVANNA_ISLAND.structureType();
+    public static class Birch extends NatureIslandStructure {
+
+
+        public static final Codec<Birch> CODEC = simpleCodec(Birch::new);
+
+        public Birch(StructureSettings settings) {
+            super(settings);
+        }
+
+        @Override
+        protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+            return new NatureIslandPiece.Birch(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+        }
+
+        @Override
+        public @NotNull StructureType<?> type() {
+            return StructureRegistry.BIRCH_ISLAND.structureType();
+        }
     }
 
-
-}
-
-public static class Jungle extends NatureIslandStructure {
+    public static class Lush extends NatureIslandStructure {
 
 
-    public static final Codec<Jungle> CODEC = simpleCodec(Jungle::new);
+        public static final Codec<Lush> CODEC = simpleCodec(Lush::new);
 
-    public Jungle(StructureSettings settings) {
-        super(settings);
+        public Lush(StructureSettings settings) {
+            super(settings);
+        }
+
+        @Override
+        protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+            return new NatureIslandPiece.Lush(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+        }
+
+        @Override
+        public @NotNull StructureType<?> type() {
+            return StructureRegistry.LUSH_ISLAND.structureType();
+        }
     }
 
-    @Override
-    protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
-        return new NatureIslandPiece.Jungle(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+    public static class Crimson extends NatureIslandStructure {
+
+
+        public static final Codec<Crimson> CODEC = simpleCodec(Crimson::new);
+
+        public Crimson(StructureSettings settings) {
+            super(settings);
+        }
+
+        @Override
+        protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+            return new NatureIslandPiece.Crimson(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+        }
+
+        @Override
+        public @NotNull StructureType<?> type() {
+            return StructureRegistry.CRIMSON_ISLAND.structureType();
+        }
     }
 
-    @Override
-    public @NotNull StructureType<?> type() {
-        return StructureRegistry.JUNGLE_ISLAND.structureType();
+    public static class Warped extends NatureIslandStructure {
+
+
+        public static final Codec<Warped> CODEC = simpleCodec(Warped::new);
+
+        public Warped(StructureSettings settings) {
+            super(settings);
+        }
+
+        @Override
+        protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+            return new NatureIslandPiece.Warped(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+        }
+
+        @Override
+        public @NotNull StructureType<?> type() {
+            return StructureRegistry.WARPED_ISLAND.structureType();
+        }
     }
 
+    public static class Dripstone extends NatureIslandStructure {
 
-}
-
-public static class Spruce extends NatureIslandStructure {
+        public static final Codec<Dripstone> CODEC = simpleCodec(Dripstone::new);
 
 
-    public static final Codec<Spruce> CODEC = simpleCodec(Spruce::new);
+        public Dripstone(StructureSettings settings) {
+            super(settings);
+        }
 
-    public Spruce(StructureSettings settings) {
-        super(settings);
+        @Override
+        protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+            return new NatureIslandPiece.Dripstone(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+        }
+
+        @Override
+        public StructureType<?> type() {
+            return StructureRegistry.DRIPSTONE_ISLAND.structureType();
+        }
     }
 
-    @Override
-    protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
-        return new NatureIslandPiece.Spruce(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+    public static class Amethyst extends NatureIslandStructure {
+
+        public static final Codec<Amethyst> CODEC = simpleCodec(Amethyst::new);
+
+
+        public Amethyst(StructureSettings settings) {
+            super(settings);
+        }
+
+        @Override
+        protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+            return new NatureIslandPiece.Amethyst(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+        }
+
+        @Override
+        public StructureType<?> type() {
+            return StructureRegistry.AMETHYST_ISLAND.structureType();
+        }
+
     }
 
-    @Override
-    public @NotNull StructureType<?> type() {
-        return StructureRegistry.SPRUCE_ISLAND.structureType();
+    public static class End extends NatureIslandStructure {
+
+        public static final Codec<End> CODEC = simpleCodec(End::new);
+
+
+        public End(StructureSettings settings) {
+            super(settings);
+        }
+
+        @Override
+        protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
+            return new NatureIslandPiece.End(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
+        }
+
+        @Override
+        public StructureType<?> type() {
+            return StructureRegistry.END_ISLAND.structureType();
+        }
+
     }
-
-
-}
-
-public static class Oak extends NatureIslandStructure {
-
-
-    public static final Codec<Oak> CODEC = simpleCodec(Oak::new);
-
-    public Oak(StructureSettings settings) {
-        super(settings);
-    }
-
-    @Override
-    protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
-        return new NatureIslandPiece.Oak(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
-    }
-
-    @Override
-    public @NotNull StructureType<?> type() {
-        return StructureRegistry.OAK_ISLAND.structureType();
-    }
-}
-
-public static class Birch extends NatureIslandStructure {
-
-
-    public static final Codec<Birch> CODEC = simpleCodec(Birch::new);
-
-    public Birch(StructureSettings settings) {
-        super(settings);
-    }
-
-    @Override
-    protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
-        return new NatureIslandPiece.Birch(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
-    }
-
-    @Override
-    public @NotNull StructureType<?> type() {
-        return StructureRegistry.BIRCH_ISLAND.structureType();
-    }
-}
-
-public static class Lush extends NatureIslandStructure {
-
-
-    public static final Codec<Lush> CODEC = simpleCodec(Lush::new);
-
-    public Lush(StructureSettings settings) {
-        super(settings);
-    }
-
-    @Override
-    protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
-        return new NatureIslandPiece.Lush(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
-    }
-
-    @Override
-    public @NotNull StructureType<?> type() {
-        return StructureRegistry.LUSH_ISLAND.structureType();
-    }
-}
-
-public static class Crimson extends NatureIslandStructure {
-
-
-    public static final Codec<Crimson> CODEC = simpleCodec(Crimson::new);
-
-    public Crimson(StructureSettings settings) {
-        super(settings);
-    }
-
-    @Override
-    protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
-        return new NatureIslandPiece.Crimson(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
-    }
-
-    @Override
-    public @NotNull StructureType<?> type() {
-        return StructureRegistry.CRIMSON_ISLAND.structureType();
-    }
-}
-
-public static class Warped extends NatureIslandStructure {
-
-
-    public static final Codec<Warped> CODEC = simpleCodec(Warped::new);
-
-    public Warped(StructureSettings settings) {
-        super(settings);
-    }
-
-    @Override
-    protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
-        return new NatureIslandPiece.Warped(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
-    }
-
-    @Override
-    public @NotNull StructureType<?> type() {
-        return StructureRegistry.WARPED_ISLAND.structureType();
-    }
-}
-
-public static class Dripstone extends NatureIslandStructure {
-
-    public static final Codec<Dripstone> CODEC = simpleCodec(Dripstone::new);
-
-
-    public Dripstone(StructureSettings settings) {
-        super(settings);
-    }
-
-    @Override
-    protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
-        return new NatureIslandPiece.Dripstone(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
-    }
-
-    @Override
-    public StructureType<?> type() {
-        return StructureRegistry.DRIPSTONE_ISLAND.structureType();
-    }
-}
-
-public static class Amethyst extends NatureIslandStructure {
-
-    public static final Codec<Amethyst> CODEC = simpleCodec(Amethyst::new);
-
-
-    public Amethyst(StructureSettings settings) {
-        super(settings);
-    }
-
-    @Override
-    protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
-        return new NatureIslandPiece.Amethyst(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
-    }
-
-    @Override
-    public StructureType<?> type() {
-        return StructureRegistry.AMETHYST_ISLAND.structureType();
-    }
-
-}
-
-public static class End extends NatureIslandStructure {
-
-    public static final Codec<End> CODEC = simpleCodec(End::new);
-
-
-    public End(StructureSettings settings) {
-        super(settings);
-    }
-
-    @Override
-    protected NatureIslandPiece createPiece(StructurePiecesBuilder structurePiecesBuilder, GenerationContext context) {
-        return new NatureIslandPiece.End(context.random(), context.chunkPos().getMinBlockX(), context.chunkPos().getMinBlockZ());
-    }
-
-    @Override
-    public StructureType<?> type() {
-        return StructureRegistry.END_ISLAND.structureType();
-    }
-
-}
 
 }

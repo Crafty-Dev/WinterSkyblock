@@ -34,10 +34,23 @@ import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class LeafPressBlock extends Block implements EntityBlock, BucketPickup {
 
+
+    public static final List<Block> VALID_LEAVES = List.of(
+            Blocks.OAK_LEAVES,
+            Blocks.SPRUCE_LEAVES,
+            Blocks.BIRCH_LEAVES,
+            Blocks.DARK_OAK_LEAVES,
+            Blocks.ACACIA_LEAVES,
+            Blocks.JUNGLE_LEAVES,
+            Blocks.MANGROVE_LEAVES,
+            Blocks.AZALEA_LEAVES,
+            Blocks.FLOWERING_AZALEA_LEAVES
+    );
 
     public static final IntegerProperty PROGRESS = IntegerProperty.create("progress", 0, 6);
     public static final IntegerProperty FLUID_LEVEL = IntegerProperty.create("fluid_level", 0, 4);
@@ -116,7 +129,7 @@ public class LeafPressBlock extends Block implements EntityBlock, BucketPickup {
 
         if (i == 0 && blockEntity.getContent().isEmpty()) {
 
-            if (stack.getItem() instanceof BlockItem b && b.getBlock() instanceof LeavesBlock) {
+            if (stack.getItem() instanceof BlockItem b && VALID_LEAVES.contains(b.getBlock())) {
                 ItemStack content = stack.copy();
                 content.setCount(1);
                 blockEntity.setContent(content);

@@ -1,13 +1,12 @@
 package de.crafty.winterskyblock.registry;
 
 import de.crafty.winterskyblock.WinterSkyblock;
-import de.crafty.winterskyblock.item.HammerItem;
-import de.crafty.winterskyblock.item.MobOrbItem;
-import de.crafty.winterskyblock.item.ResourceWheatItem;
-import de.crafty.winterskyblock.item.WoodenBucketItem;
+import de.crafty.winterskyblock.item.*;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -32,6 +31,7 @@ public class ItemRegistry {
 
     public static final RegistryObject<Item> WOODEN_BUCKET = REGISTRY.register("wooden_bucket", () -> new WoodenBucketItem(() -> Fluids.EMPTY, new Item.Properties().stacksTo(16).tab(WINTER_SKYBLOCK)));
     public static final RegistryObject<Item> WOODEN_WATER_BUCKET = REGISTRY.register("wooden_water_bucket", () -> new WoodenBucketItem(() -> Fluids.WATER, new Item.Properties().stacksTo(1).craftRemainder(WOODEN_BUCKET.get()).tab(WINTER_SKYBLOCK)));
+    public static final RegistryObject<Item> WOODEN_POWDER_SNOW_BUCKET = REGISTRY.register("wooden_powder_snow_bucket", () -> new WoodenSolidBucketItem(Blocks.POWDER_SNOW, SoundEvents.BUCKET_EMPTY_POWDER_SNOW, (new Item.Properties()).stacksTo(1).tab(WINTER_SKYBLOCK)));
     public static final RegistryObject<Item> WOOD_DUST = REGISTRY.register("wood_dust", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
     public static final RegistryObject<Item> STONE_PIECE = REGISTRY.register("stone_piece", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
     public static final RegistryObject<Item> NETHERRACK_PIECE = REGISTRY.register("netherrack_piece", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
@@ -70,7 +70,8 @@ public class ItemRegistry {
     public static final RegistryObject<Item> GOLD_DUST = REGISTRY.register("gold_dust", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
     public static final RegistryObject<Item> DIAMOND_DUST = REGISTRY.register("diamond_dust", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
     public static final RegistryObject<Item> EMERALD_DUST = REGISTRY.register("emerald_dust", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
-    public static final RegistryObject<Item> LAPIS_DUST = REGISTRY.register("lapis_dust", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
+    //public static final RegistryObject<Item> LAPIS_DUST = REGISTRY.register("lapis_dust", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
+
     public static final RegistryObject<Item> NETHERITE_DUST = REGISTRY.register("netherite_dust", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
     public static final RegistryObject<Item> QUARTZ_DUST = REGISTRY.register("quartz_dust", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
 

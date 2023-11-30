@@ -2,8 +2,8 @@ package de.crafty.winterskyblock.registry;
 
 import com.mojang.serialization.Codec;
 import de.crafty.winterskyblock.WinterSkyblock;
-import de.crafty.winterskyblock.structure.NatureIslandStructure;
-import de.crafty.winterskyblock.structure.piece.NatureIslandPiece;
+import de.crafty.winterskyblock.structure.nature_island.NatureIslandStructure;
+import de.crafty.winterskyblock.structure.nature_island.NatureIslandPiece;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -23,7 +23,6 @@ import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 import net.minecraft.world.level.levelgen.structure.structures.NetherFortressStructure;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +64,7 @@ public class StructureRegistry {
     public static final StructureRegistryObject OAK_ISLAND = ObjectBuilder.of("oak_island")
             .pieces(NatureIslandPiece.Oak::new)
             .codec(NatureIslandStructure.Oak.CODEC)
-            .structure(new NatureIslandStructure.Oak(structure(Tags.Biomes.IS_PLAINS, Map.of(), GenerationStep.Decoration.RAW_GENERATION, TerrainAdjustment.NONE)))
+            .structure(new NatureIslandStructure.Oak(structure(TagRegistry.IS_SWAMP_OR_PLAINS, Map.of(), GenerationStep.Decoration.RAW_GENERATION, TerrainAdjustment.NONE)))
             .placement(new RandomSpreadStructurePlacement(8, 4, RandomSpreadType.LINEAR, 187))
             .build();
 

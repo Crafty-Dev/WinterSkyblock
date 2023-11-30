@@ -16,6 +16,7 @@ public class FastDecay {
     public static final HashMap<ServerLevel, ArrayList<BlockPos>> LEAVES = new HashMap<>();
 
 
+
     @SubscribeEvent
     public void onDecay$1(TickEvent.LevelTickEvent event) {
 

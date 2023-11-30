@@ -8,10 +8,13 @@ import de.crafty.winterskyblock.handler.*;
 import de.crafty.winterskyblock.item.HammerItem;
 import de.crafty.winterskyblock.network.SkyblockNetworkManager;
 import de.crafty.winterskyblock.registry.*;
+import de.crafty.winterskyblock.tweaks.CauldronInteractionTweaker;
+import de.crafty.winterskyblock.tweaks.DispenseItemBehaviorTweaker;
 import de.crafty.winterskyblock.util.ModCompostables;
 import de.crafty.winterskyblock.world.SpawnManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.dedicated.DedicatedServerSettings;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
@@ -23,6 +26,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.RegisterEvent;
 
@@ -33,6 +37,7 @@ import java.nio.file.Paths;
 public class WinterSkyblock {
 
     public static final String MODID = "winterskyblock";
+    public static final ResourceLocation JEI_RECIPE_GUI = new ResourceLocation(MODID, "textures/gui/winterskyblock_gui.png");
 
 
     public int islandCount;
@@ -51,6 +56,7 @@ public class WinterSkyblock {
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onRegistry);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerBlockEntityRenderers);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::postInit);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(EntityRegistry::registerAttributes);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(EntityRegistry::registerRenderers);
@@ -79,7 +85,8 @@ public class WinterSkyblock {
         ParticleRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
         SoundRegistry.register(FMLJavaModLoadingContext.get().getModEventBus());
 
-        HammerItem.bootstrap();
+        //Mod Bootstrap
+        HammerDropHandler.bootstrap();
         LavaDropHandler.bootstrap();
         BlockTransformationHandler.bootstrap();
 
@@ -93,6 +100,12 @@ public class WinterSkyblock {
         return level.getDifficulty() != Difficulty.PEACEFUL && (Monster.isDarkEnoughToSpawn(level, pos, randomSource) || (level.getBiome(pos).is(BiomeTags.IS_END) && monster.equals(EntityType.ENDERMAN) && level.getLightEmission(pos) <= 10)) && Monster.checkMobSpawnRules(monster, level, spawnType, pos, randomSource);
     }
 
+
+    private void postInit(FMLLoadCompleteEvent event){
+        //Tweaked Vanilla Bootstraps
+        CauldronInteractionTweaker.bootstrap();
+        DispenseItemBehaviorTweaker.bootstrap();
+    }
 
     private void onRegistry(RegisterEvent event) {
 

@@ -4,6 +4,7 @@ import de.crafty.winterskyblock.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -11,7 +12,14 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LavaCauldronBlock;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
+import net.minecraftforge.event.entity.item.ItemEvent;
+import net.minecraftforge.event.entity.item.ItemExpireEvent;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.HashMap;
@@ -20,7 +28,7 @@ import java.util.function.Supplier;
 
 public class LavaDropHandler {
 
-    private static final HashMap<Supplier<Item>, List<LavaDrop>> LAVA_DROPS = new HashMap<>();
+    public static final HashMap<Supplier<Item>, List<LavaDrop>> LAVA_DROPS = new HashMap<>();
 
     public static void bootstrap() {
         registerDrops(Items.COBBLESTONE, new LavaDrop(ItemRegistry.NETHERRACK_PIECE, 1, 3, 0.5F, true));
@@ -53,7 +61,7 @@ public class LavaDropHandler {
         items.forEach(item -> LAVA_DROPS.put(item, List.of(drops)));
     }
 
-    private static List<LavaDrop> getDropsFor(Item item) {
+    public static List<LavaDrop> getDropsFor(Item item) {
         for(Supplier<Item> sup : LAVA_DROPS.keySet()){
             if(sup.get().equals(item))
                 return LAVA_DROPS.get(sup);
@@ -66,7 +74,6 @@ public class LavaDropHandler {
 
         if (!(event.getEntity() instanceof ItemEntity item) || !(event.getLevel() instanceof ServerLevel level))
             return;
-
 
         BlockPos pos = item.blockPosition();
         ItemStack stack = item.getItem();

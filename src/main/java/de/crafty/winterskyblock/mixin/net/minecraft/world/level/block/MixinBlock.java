@@ -1,5 +1,6 @@
 package de.crafty.winterskyblock.mixin.net.minecraft.world.level.block;
 
+import de.crafty.winterskyblock.handler.HammerDropHandler;
 import de.crafty.winterskyblock.item.HammerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -32,7 +33,7 @@ public abstract class MixinBlock extends BlockBehaviour implements ItemLike, net
     @Inject(method = "getDrops(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)Ljava/util/List;", at = @At("HEAD"), cancellable = true)
     private static void applyHammerPatches(BlockState state, ServerLevel level, BlockPos pos, BlockEntity blockEntity, Entity entity, ItemStack stack, CallbackInfoReturnable<List<ItemStack>> cir){
 
-        if(stack.getItem() instanceof HammerItem && HammerItem.isHammerable(state.getBlock()))
+        if(stack.getItem() instanceof HammerItem && HammerDropHandler.isHammerable(state.getBlock()))
             cir.setReturnValue(List.of());
 
     }

@@ -4,6 +4,7 @@ import de.crafty.winterskyblock.registry.ItemRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.cauldron.CauldronInteraction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.item.SolidBucketItem;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -62,12 +64,17 @@ public class WoodenBucketItem extends BucketItem {
                 if (blockstate1.getBlock() instanceof BucketPickup bucketPickup && !blockstate1.getBlock().equals(Blocks.LAVA)) {
                     ItemStack pickupStack = bucketPickup.pickupBlock(level, blockpos, blockstate1);
                     ItemStack bucketStack = ItemStack.EMPTY;
+
                     if(pickupStack.getItem() instanceof BucketItem bucket && bucket.getFluid() == Fluids.WATER)
                         bucketStack = new ItemStack(ItemRegistry.WOODEN_WATER_BUCKET.get());
+                    if(pickupStack.getItem() instanceof SolidBucketItem bucket && bucket.getBlock() == Blocks.POWDER_SNOW)
+                        bucketStack = new ItemStack(ItemRegistry.WOODEN_POWDER_SNOW_BUCKET.get());
 
                     if (!bucketStack.isEmpty()) {
                         player.awardStat(Stats.ITEM_USED.get(this));
-                        player.playSound(SoundEvents.BUCKET_FILL, 1.0F, 1.0F);
+                        bucketPickup.getPickupSound(blockstate1).ifPresent((p_150709_) -> {
+                            player.playSound(p_150709_, 1.0F, 1.0F);
+                        });
                         level.gameEvent(player, GameEvent.FLUID_PICKUP, blockpos);
                         ItemStack itemstack2 = ItemUtils.createFilledResult(itemstack, player, bucketStack);
                         if (!level.isClientSide) {
@@ -76,6 +83,17 @@ public class WoodenBucketItem extends BucketItem {
 
                         return InteractionResultHolder.sidedSuccess(itemstack2, level.isClientSide());
                     }
+                }
+
+                if(blockstate1.getBlock() instanceof BucketPickup bucketPickup && blockstate1.getBlock().equals(Blocks.LAVA)){
+                    player.awardStat(Stats.ITEM_USED.get(this));
+
+                    if(!player.isCreative())
+                        itemstack.shrink(1);
+                    player.setSecondsOnFire(10);
+                    player.playSound(SoundEvents.MUDDY_MANGROVE_ROOTS_STEP, 4.0F, 0.75F);
+
+                    return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
                 }
 
                 return InteractionResultHolder.fail(itemstack);

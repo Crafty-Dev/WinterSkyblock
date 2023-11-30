@@ -5,6 +5,8 @@
   "refmap": "winterskyblock.refmap.json",
   "mixins": [
     "net.minecraft.core.dispenser.MixinShearsDispenseItemBehavior",
+    "net.minecraft.data.worldgen.MixinDimensionTypes",
+    "net.minecraft.data.worldgen.biome.MixinBiomes",
     "net.minecraft.server.level.MixinServerLevel",
     "net.minecraft.server.network.MixinServerGamePacketListenerImpl",
     "net.minecraft.world.entity.MixinSpawnPlacements",
@@ -15,7 +17,9 @@
     "net.minecraft.world.level.block.MixinComposterBlock",
     "net.minecraft.world.level.block.MixinComposterInputContainer",
     "net.minecraft.world.level.block.MixinLeavesBlock",
+    "net.minecraft.world.level.block.entity.MixinHopperBlockEntity",
     "net.minecraft.world.level.chunk.MixinChunkGenerators",
+    "net.minecraft.world.level.dimension.MixinLevelStem",
     "net.minecraft.world.level.dimension.end.MixinEndDragonFight",
     "net.minecraft.world.level.levelgen.MixinPhantomSpawner",
     "net.minecraft.world.level.levelgen.presets.MixinWorldPresets",

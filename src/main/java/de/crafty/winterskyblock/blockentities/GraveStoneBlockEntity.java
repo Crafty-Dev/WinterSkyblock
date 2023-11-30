@@ -6,10 +6,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +33,10 @@ public class GraveStoneBlockEntity extends BlockEntity {
 
     public void setPlayerProfile(GameProfile profile){
         this.playerProfile = profile;
+
         this.setChanged();
     }
+
 
     public GameProfile getPlayerProfile(){
         return this.playerProfile;
@@ -42,6 +50,7 @@ public class GraveStoneBlockEntity extends BlockEntity {
     public List<ItemStack> getContent(){
         return this.items;
     }
+
 
     @Override
     public void load(CompoundTag tag) {
@@ -66,15 +75,22 @@ public class GraveStoneBlockEntity extends BlockEntity {
         this.items.forEach(stack -> listTag.add(stack.save(new CompoundTag())));
         tag.put("items", listTag);
 
-        tag.put("playerProfile", NbtUtils.writeGameProfile(new CompoundTag(), this.playerProfile));
+        if(this.playerProfile != null)
+            tag.put("playerProfile", NbtUtils.writeGameProfile(new CompoundTag(), this.playerProfile));
     }
 
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public @NotNull CompoundTag getUpdateTag() {
         CompoundTag tag = super.getUpdateTag();
         tag.put("playerProfile", NbtUtils.writeGameProfile(new CompoundTag(), this.playerProfile));
         return tag;
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override

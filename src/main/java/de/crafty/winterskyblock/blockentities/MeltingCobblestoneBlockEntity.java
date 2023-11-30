@@ -20,7 +20,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class MeltingCobblestoneBlockEntity extends BlockEntity {
 
 
-    private final float meltingTime = 20 * 20;
+    public static final float BASE_MELTING_TIME = 20 * 20;
     private float progression;
     private final float baseEfficiency = 1.0F;
 
@@ -71,11 +71,11 @@ public class MeltingCobblestoneBlockEntity extends BlockEntity {
     }
 
     public float getMeltingTime(){
-        return this.meltingTime;
+        return BASE_MELTING_TIME;
     }
 
     public float getProgress(){
-        return Math.min(this.progression / this.meltingTime, 1.0F);
+        return Math.min(this.progression / BASE_MELTING_TIME, 1.0F);
     }
 
 
@@ -102,7 +102,7 @@ public class MeltingCobblestoneBlockEntity extends BlockEntity {
             });
         }
 
-        if(blockEntity.currentProgression() >= blockEntity.meltingTime){
+        if(blockEntity.currentProgression() >= BASE_MELTING_TIME){
             level.setBlock(pos, Blocks.LAVA.defaultBlockState(), 3);
             serverLevel.getServer().getPlayerList().getPlayers().forEach(player -> {
                 player.connection.send(new ClientboundSoundPacket(SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, pos.getX(), pos.getY(), pos.getZ(), 1.0F, 1.0F, serverLevel.getSeed()));

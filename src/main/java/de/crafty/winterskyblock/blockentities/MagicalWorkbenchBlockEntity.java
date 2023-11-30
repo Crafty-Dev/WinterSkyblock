@@ -121,6 +121,10 @@ public class MagicalWorkbenchBlockEntity extends BlockEntity {
         return 1 / this.getTransformationAnimationSpeed();
     }
 
+    public double getAnimationTime(){
+        return this.getTransformationAnimationTime() + this.getMorphAnimationTime();
+    }
+
 
     public List<BlockPos> getRitualBlocks() {
         BlockPos pos = this.getBlockPos();
@@ -156,6 +160,7 @@ public class MagicalWorkbenchBlockEntity extends BlockEntity {
                 blockEntity.tick = 0;
                 level.setBlock(pos, state.setValue(MagicalWorkbenchBlock.ACTIVITY_STATE, 0), 3);
                 level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), state.getSoundType().getBreakSound(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
+
                 level.addDestroyBlockEffect(pos, state);
                 Block.popResource(level, pos.above(), new ItemStack(ItemRegistry.DRAGON_ARTIFACT.get()));
                 return;
@@ -163,7 +168,9 @@ public class MagicalWorkbenchBlockEntity extends BlockEntity {
 
             blockEntity.setRitualBlocks(stacks);
             level.setBlock(pos, state.setValue(MagicalWorkbenchBlock.ACTIVITY_STATE, 2), 3);
-            level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENDER_EYE_DEATH, SoundSource.BLOCKS, 1.0F, 2.0F, false);
+
+            if(level.isClientSide())
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENDER_EYE_DEATH, SoundSource.BLOCKS, 1.0F, 2.0F, false);
 
             for (BlockPos p : blockEntity.getRitualBlocks()) {
                 level.addDestroyBlockEffect(p, level.getBlockState(p));
@@ -174,6 +181,24 @@ public class MagicalWorkbenchBlockEntity extends BlockEntity {
             for (BlockPos p : blockEntity.getRitualBlocks()) {
                 level.setBlock(p, Blocks.AIR.defaultBlockState(), 3);
             }
+        }
+
+        if(level.isClientSide() && blockEntity.hasAnimationStarted() && !blockEntity.hasAnimationFinished()){
+
+            int soundStep;
+
+            if(blockEntity.getAnimationTick() / blockEntity.getAnimationTime() > 0.75D)
+                soundStep = 2;
+            else if(blockEntity.getAnimationTick() / blockEntity.getAnimationTime() > 0.5D)
+                soundStep = 4;
+            else if(blockEntity.getAnimationTick() / blockEntity.getAnimationTime() > 0.25D)
+                soundStep = 6;
+            else
+                soundStep = 8;
+
+            System.out.println(soundStep);
+            if(blockEntity.getAnimationTick() % soundStep == 0)
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BOAT_PADDLE_LAND, SoundSource.BLOCKS, 5.0F, 0.25F, false);
         }
 
         if (blockEntity.hasAnimationFinished()) {

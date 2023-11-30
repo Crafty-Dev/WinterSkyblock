@@ -1,34 +1,19 @@
-package de.crafty.winterskyblock.structure.piece;
+package de.crafty.winterskyblock.structure.nature_island;
 
-import com.sun.source.doctree.BlockTagTree;
 import de.crafty.winterskyblock.registry.BlockRegistry;
 import de.crafty.winterskyblock.registry.StructureRegistry;
 import de.crafty.winterskyblock.registry.TagRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.data.worldgen.features.TreeFeatures;
-import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tags.BiomeTags;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.HugeFungusConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.ScatteredFeaturePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
@@ -533,7 +518,6 @@ public abstract class NatureIslandPiece extends ScatteredFeaturePiece {
 
 
     }
-
     public static class Lush extends NatureIslandPiece {
 
         public Lush(RandomSource source, int x, int y) {
