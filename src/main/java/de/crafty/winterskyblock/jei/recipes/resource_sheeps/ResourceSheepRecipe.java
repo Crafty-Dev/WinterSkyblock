@@ -34,4 +34,9 @@ public class ResourceSheepRecipe implements IJeiResourceSheepRecipe {
     public List<ItemStack> getWheat() {
         return List.of(new ItemStack(this.sheepType.getBait()));
     }
+
+    @Override
+    public String getSheepName() {
+        return this.sheepType.name();
+    }
 }

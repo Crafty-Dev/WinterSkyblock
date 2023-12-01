@@ -1,6 +1,7 @@
 package de.crafty.winterskyblock.jei.recipes;
 
 import de.crafty.winterskyblock.block.LeafPressBlock;
+import de.crafty.winterskyblock.entity.ResourceSheep;
 import de.crafty.winterskyblock.handler.BlockTransformationHandler;
 import de.crafty.winterskyblock.handler.HammerDropHandler;
 import de.crafty.winterskyblock.handler.LavaDropHandler;
@@ -14,6 +15,9 @@ import de.crafty.winterskyblock.jei.recipes.lava_conversion.IJeiLavaConversionRe
 import de.crafty.winterskyblock.jei.recipes.lava_conversion.LavaConversionRecipe;
 import de.crafty.winterskyblock.jei.recipes.leaf_press.IJeiLeafPressRecipe;
 import de.crafty.winterskyblock.jei.recipes.leaf_press.LeafPressRecipe;
+import de.crafty.winterskyblock.jei.recipes.resource_sheeps.IJeiResourceSheepRecipe;
+import de.crafty.winterskyblock.jei.recipes.resource_sheeps.ResourceSheepRecipe;
+import de.crafty.winterskyblock.registry.EntityRegistry;
 import de.crafty.winterskyblock.registry.ItemRegistry;
 import de.crafty.winterskyblock.util.ValidHeatSource;
 import net.minecraft.world.item.ItemStack;
@@ -85,6 +89,17 @@ public class WinterSkyblockRecipeMaker {
         List<IJeiLeafPressRecipe> list = new ArrayList<>();
 
         list.add(new LeafPressRecipe(LeafPressBlock.VALID_LEAVES, 0.25f, new ItemStack(ItemRegistry.DRIED_LEAVES.get())));
+
+        return list;
+    }
+
+    public static List<IJeiResourceSheepRecipe> getResourceSheepRecipes(){
+
+        List<IJeiResourceSheepRecipe> list = new ArrayList<>();
+
+        for(ResourceSheep.Type type : ResourceSheep.Type.values()){
+            list.add(new ResourceSheepRecipe(type));
+        }
 
         return list;
     }

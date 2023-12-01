@@ -27,8 +27,8 @@ public class EntityRegistry {
 
 
     private static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, WinterSkyblock.MODID);
-    private static final List<RegistryObject<EntityType<ResourceSheep>>> RESOURCE_SHEEPS = new ArrayList<>();
-    private static final Map<RegistryObject<EntityType<ResourceSheep>>, Supplier<AttributeSupplier>> RESOURCE_SHEEP_ATTRIBUTES = new HashMap<>();
+    public static final List<RegistryObject<EntityType<ResourceSheep>>> RESOURCE_SHEEPS = new ArrayList<>();
+    public static final Map<RegistryObject<EntityType<ResourceSheep>>, Supplier<AttributeSupplier>> RESOURCE_SHEEP_ATTRIBUTES = new HashMap<>();
 
 
 

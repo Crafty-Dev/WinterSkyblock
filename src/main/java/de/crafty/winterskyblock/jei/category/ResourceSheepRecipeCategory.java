@@ -1,15 +1,20 @@
 package de.crafty.winterskyblock.jei.category;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import de.crafty.winterskyblock.WinterSkyblock;
 import de.crafty.winterskyblock.jei.WinterSkyblockRecipeTypes;
 import de.crafty.winterskyblock.jei.recipes.resource_sheeps.IJeiResourceSheepRecipe;
 import de.crafty.winterskyblock.registry.ItemRegistry;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
@@ -20,7 +25,7 @@ public class ResourceSheepRecipeCategory implements IRecipeCategory<IJeiResource
 
     public ResourceSheepRecipeCategory(IGuiHelper guiHelper){
 
-        this.background = guiHelper.createDrawable(WinterSkyblock.JEI_RECIPE_GUI, 133, 0, 66, 36);
+        this.background = guiHelper.createDrawable(WinterSkyblock.JEI_RECIPE_GUI, 133, 0, 66, 126);
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(ItemRegistry.COAL_ENRICHED_WHEAT.get()));
     }
 
@@ -47,5 +52,33 @@ public class ResourceSheepRecipeCategory implements IRecipeCategory<IJeiResource
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, IJeiResourceSheepRecipe recipe, IFocusGroup focuses) {
 
+        builder.addSlot(RecipeIngredientRole.INPUT, 49, 8).addItemStacks(recipe.getWheat());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 49, 28).addItemStacks(recipe.getDrops());
+
+    }
+
+    @Override
+    public void draw(IJeiResourceSheepRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+
+
+        Font font = Minecraft.getInstance().font;
+
+        Component name = Component.translatable("entity.winterskyblock." + recipe.getSheepName().toLowerCase());
+        font.draw(stack, name, this.getWidth() / 2.0F - font.width(name) / 2.0F, 1, 0xFF808080);
+
+        Component wheat = Component.translatable("gui.jei.category.resource_sheep.wheat").append(":");
+        Component drop = Component.translatable("gui.jei.category.resource_sheep.drop").append(":");
+
+        stack.pushPose();
+        stack.translate(4, 7 + 9 - font.lineHeight / 2.0F, 0);
+        stack.scale(0.75F, 0.75F, 1.0F);
+        font.draw(stack, wheat, 0, 0, 0xFF808080);
+        stack.popPose();
+
+        stack.pushPose();
+        stack.translate(4, 7 + 29 - font.lineHeight / 2.0F, 0);
+        stack.scale(0.75F, 0.75F, 1.0F);
+        font.draw(stack, drop, 0, 0, 0xFF808080);
+        stack.popPose();
     }
 }
