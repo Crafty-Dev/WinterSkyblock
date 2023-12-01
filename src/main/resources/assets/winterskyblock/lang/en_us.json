@@ -130,5 +130,6 @@
   "gui.jei.category.leaf_press": "Leaf Press",
 
   "winterskyblock.hammerdrop.chance": "Chance",
-  "block.winterskyblock.leaf_press.water_amount": "Amount"
+  "block.winterskyblock.leaf_press.water_amount": "Amount",
+  "gui.jei.category.resource_sheep": "Resource Sheeps"
 }

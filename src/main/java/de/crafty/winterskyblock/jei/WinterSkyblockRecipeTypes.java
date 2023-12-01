@@ -6,6 +6,7 @@ import de.crafty.winterskyblock.jei.recipes.cobblestone_melting.IJeiCobblestoneM
 import de.crafty.winterskyblock.jei.recipes.hammering.IJeiHammeringRecipe;
 import de.crafty.winterskyblock.jei.recipes.lava_conversion.IJeiLavaConversionRecipe;
 import de.crafty.winterskyblock.jei.recipes.leaf_press.IJeiLeafPressRecipe;
+import de.crafty.winterskyblock.jei.recipes.resource_sheeps.IJeiResourceSheepRecipe;
 import mezz.jei.api.recipe.RecipeType;
 
 public class WinterSkyblockRecipeTypes {
@@ -18,4 +19,8 @@ public class WinterSkyblockRecipeTypes {
     public static final RecipeType<IJeiHammeringRecipe> HAMMERING = RecipeType.create(WinterSkyblock.MODID, "hammering", IJeiHammeringRecipe.class);
 
     public static final RecipeType<IJeiLeafPressRecipe> LEAF_PRESS = RecipeType.create(WinterSkyblock.MODID, "leaf_press", IJeiLeafPressRecipe.class);
+
+    public static final RecipeType<IJeiResourceSheepRecipe> RESOURCE_SHEEP = RecipeType.create(WinterSkyblock.MODID, "resource_sheep", IJeiResourceSheepRecipe.class);
+
+
 }
