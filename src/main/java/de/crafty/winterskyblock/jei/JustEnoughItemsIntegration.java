@@ -30,7 +30,7 @@ public class JustEnoughItemsIntegration implements IModPlugin {
         registration.addRecipes(WinterSkyblockRecipeTypes.COBBLESTONE_MELTING, WinterSkyblockRecipeMaker.getCobblestoneMeltingRecipes());
         registration.addRecipes(WinterSkyblockRecipeTypes.HAMMERING, WinterSkyblockRecipeMaker.getHammeringRecipes());
         registration.addRecipes(WinterSkyblockRecipeTypes.LEAF_PRESS, WinterSkyblockRecipeMaker.getLeafPressRecipes());
-        //registration.addRecipes(WinterSkyblockRecipeTypes.RESOURCE_SHEEP, WinterSkyblockRecipeMaker.getResourceSheepRecipes());
+        registration.addRecipes(WinterSkyblockRecipeTypes.RESOURCE_SHEEP, WinterSkyblockRecipeMaker.getResourceSheepRecipes());
     }
 
 
@@ -44,6 +44,6 @@ public class JustEnoughItemsIntegration implements IModPlugin {
         registration.addRecipeCategories(new CobblestoneMeltingRecipeCategory(guiHelper));
         registration.addRecipeCategories(new HammeringRecipeCategory(guiHelper));
         registration.addRecipeCategories(new LeafPressRecipeCategory(guiHelper));
-        //registration.addRecipeCategories(new ResourceSheepRecipeCategory(guiHelper));
+        registration.addRecipeCategories(new ResourceSheepRecipeCategory(guiHelper));
     }
 }

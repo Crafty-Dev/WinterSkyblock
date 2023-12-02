@@ -33,7 +33,7 @@ public class LeafPressRecipeCategory implements IRecipeCategory<IJeiLeafPressRec
 
     public LeafPressRecipeCategory(IGuiHelper guiHelper){
 
-        this.background = guiHelper.createDrawable(WinterSkyblock.JEI_RECIPE_GUI, 0, 180, 116, 54);
+        this.background = guiHelper.drawableBuilder(WinterSkyblock.JEI_RECIPE_GUI, 0, 180, 116, 54).setTextureSize(512, 512).build();
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(ItemRegistry.LEAF_PRESS.get()));
     }
 

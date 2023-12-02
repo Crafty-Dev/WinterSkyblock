@@ -45,7 +45,7 @@ public class CobblestoneMeltingRecipeCategory implements IRecipeCategory<IJeiCob
 
     public CobblestoneMeltingRecipeCategory(IGuiHelper guiHelper){
 
-        this.background = guiHelper.createDrawable(WinterSkyblock.JEI_RECIPE_GUI, 0, 72, 98, 54);
+        this.background = guiHelper.drawableBuilder(WinterSkyblock.JEI_RECIPE_GUI, 0, 72, 98, 54).setTextureSize(512, 512).build();
 
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(Items.COBBLESTONE));
 
@@ -55,6 +55,7 @@ public class CobblestoneMeltingRecipeCategory implements IRecipeCategory<IJeiCob
                     @Override
                     public IDrawableAnimated load(Integer burnTime) {
                         return guiHelper.drawableBuilder(WinterSkyblock.JEI_RECIPE_GUI, 98, 72, 14, 14)
+                                .setTextureSize(512, 512)
                                 .buildAnimated(burnTime, IDrawableAnimated.StartDirection.BOTTOM, false);
                     }
                 });

@@ -26,7 +26,7 @@ public class LavaConversionRecipeCategory implements IRecipeCategory<IJeiLavaCon
 
 
     public LavaConversionRecipeCategory(IGuiHelper guiHelper){
-        this.background = guiHelper.createDrawable(WinterSkyblock.JEI_RECIPE_GUI, 0, 0, 133, 36);
+        this.background = guiHelper.drawableBuilder(WinterSkyblock.JEI_RECIPE_GUI, 0, 0, 133, 36).setTextureSize(512, 512).build();
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(Items.LAVA_BUCKET));
     }
 

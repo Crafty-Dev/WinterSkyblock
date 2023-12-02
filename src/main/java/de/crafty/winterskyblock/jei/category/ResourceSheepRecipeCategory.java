@@ -25,7 +25,7 @@ public class ResourceSheepRecipeCategory implements IRecipeCategory<IJeiResource
 
     public ResourceSheepRecipeCategory(IGuiHelper guiHelper){
 
-        this.background = guiHelper.createDrawable(WinterSkyblock.JEI_RECIPE_GUI, 133, 0, 66, 126);
+        this.background = guiHelper.drawableBuilder(WinterSkyblock.JEI_RECIPE_GUI, 174, 0, 66, 130).setTextureSize(512, 512).build();
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(ItemRegistry.COAL_ENRICHED_WHEAT.get()));
     }
 
@@ -52,8 +52,8 @@ public class ResourceSheepRecipeCategory implements IRecipeCategory<IJeiResource
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, IJeiResourceSheepRecipe recipe, IFocusGroup focuses) {
 
-        builder.addSlot(RecipeIngredientRole.INPUT, 49, 8).addItemStacks(recipe.getWheat());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 49, 28).addItemStacks(recipe.getDrops());
+        builder.addSlot(RecipeIngredientRole.INPUT, 49, 12).addItemStacks(recipe.getWheat());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 49, 32).addItemStacks(recipe.getDrops());
 
     }
 
@@ -63,22 +63,14 @@ public class ResourceSheepRecipeCategory implements IRecipeCategory<IJeiResource
 
         Font font = Minecraft.getInstance().font;
 
-        Component name = Component.translatable("entity.winterskyblock." + recipe.getSheepName().toLowerCase());
-        font.draw(stack, name, this.getWidth() / 2.0F - font.width(name) / 2.0F, 1, 0xFF808080);
+        Component name = Component.translatable("entity.winterskyblock." + recipe.getSheepName().toLowerCase() + "_sheep");
+
+        font.draw(stack, name, this.getWidth() / 2.0F - font.width(name) / 2.0F, 0, 0xFF808080);
 
         Component wheat = Component.translatable("gui.jei.category.resource_sheep.wheat").append(":");
         Component drop = Component.translatable("gui.jei.category.resource_sheep.drop").append(":");
 
-        stack.pushPose();
-        stack.translate(4, 7 + 9 - font.lineHeight / 2.0F, 0);
-        stack.scale(0.75F, 0.75F, 1.0F);
-        font.draw(stack, wheat, 0, 0, 0xFF808080);
-        stack.popPose();
-
-        stack.pushPose();
-        stack.translate(4, 7 + 29 - font.lineHeight / 2.0F, 0);
-        stack.scale(0.75F, 0.75F, 1.0F);
-        font.draw(stack, drop, 0, 0, 0xFF808080);
-        stack.popPose();
+        font.draw(stack, wheat, 4, 11 + 9 - font.lineHeight / 2.0F, 0xFF808080);
+        font.draw(stack, drop, 4, 11 + 29 - font.lineHeight / 2.0F, 0xFF808080);
     }
 }

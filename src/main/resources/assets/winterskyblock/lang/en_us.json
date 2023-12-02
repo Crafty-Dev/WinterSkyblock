@@ -120,6 +120,7 @@
   "entity.winterskyblock.dirt_sheep": "Dirt Sheep",
   "entity.winterskyblock.netherrack_sheep": "Netherrack Sheep",
   "entity.winterskyblock.glowstone_sheep": "Glowstone Sheep",
+  "entity.winterskyblock.quartz_sheep": "Quartz Sheep",
 
 
   "gui.jei.category.lava_conversion": "Lava Conversion",
@@ -132,6 +133,6 @@
   "winterskyblock.hammerdrop.chance": "Chance",
   "block.winterskyblock.leaf_press.water_amount": "Amount",
   "gui.jei.category.resource_sheep": "Resource Sheeps",
-  "gui.jei.category.resource_sheep.wheat": "Resource Wheat",
+  "gui.jei.category.resource_sheep.wheat": "Bait",
   "gui.jei.category.resource_sheep.drop": "Drops"
 }

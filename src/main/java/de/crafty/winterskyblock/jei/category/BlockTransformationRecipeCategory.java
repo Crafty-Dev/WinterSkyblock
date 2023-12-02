@@ -23,7 +23,7 @@ public class BlockTransformationRecipeCategory implements IRecipeCategory<IJeiBl
     private final IDrawable icon;
 
     public BlockTransformationRecipeCategory(IGuiHelper guiHelper){
-        this.background = guiHelper.createDrawable(WinterSkyblock.JEI_RECIPE_GUI, 0, 36, 118, 36);
+        this.background = guiHelper.drawableBuilder(WinterSkyblock.JEI_RECIPE_GUI, 0, 36, 118, 36).setTextureSize(512, 512).build();
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(Blocks.STONE));
     }
 

@@ -31,7 +31,7 @@ public class HammeringRecipeCategory implements IRecipeCategory<IJeiHammeringRec
 
     public HammeringRecipeCategory(IGuiHelper guiHelper) {
 
-        this.background = guiHelper.createDrawable(WinterSkyblock.JEI_RECIPE_GUI, 0, 126, 162, 54);
+        this.background = guiHelper.drawableBuilder(WinterSkyblock.JEI_RECIPE_GUI, 0, 126, 162, 54).setTextureSize(512, 512).build();
         this.icon = guiHelper.createDrawableItemStack(new ItemStack(ItemRegistry.IRON_HAMMER.get()));
 
     }
