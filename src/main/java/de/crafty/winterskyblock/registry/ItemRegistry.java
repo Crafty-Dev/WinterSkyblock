@@ -109,6 +109,11 @@ public class ItemRegistry {
     public static final RegistryObject<Item> ENDER_CORE = REGISTRY.register("ender_core", () -> new Item(new Item.Properties().stacksTo(4).rarity(Rarity.EPIC).tab(WINTER_SKYBLOCK)));
     public static final RegistryObject<Item> DRAGON_ARTIFACT = REGISTRY.register("dragon_artifact", () -> new Item(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).tab(WINTER_SKYBLOCK)));
 
+
+    public static final RegistryObject<Item> SNOW_CRYSTAL = REGISTRY.register("snow_crystal", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
+    public static final RegistryObject<Item> HEATED_SNOW_CRYSTAL = REGISTRY.register("heated_snow_crystal", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
+
+
     //Blocks
     public static final RegistryObject<BlockItem> LEAF_PRESS = registerBlock(BlockRegistry.LEAF_PRESS, new Item.Properties().tab(WINTER_SKYBLOCK));
     public static final RegistryObject<BlockItem> DRIED_LEAVES = registerBlock(BlockRegistry.DRIED_LEAVES, new Item.Properties().tab(WINTER_SKYBLOCK));

@@ -74,6 +74,8 @@ public class WinterSkyblock {
         MinecraftForge.EVENT_BUS.register(new BlockTransformationHandler());
         MinecraftForge.EVENT_BUS.register(new BlockBreakHandler());
 
+        MinecraftForge.EVENT_BUS.register(new ZombieConversionHandler());
+
         SkyblockNetworkManager.registerPackets();
 
 
