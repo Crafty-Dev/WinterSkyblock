@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "ingredient": {
+    "item": "winterskyblock:snow_crystal"
+  },
+  "result": "winterskyblock:heated_snow_crystal"
+}

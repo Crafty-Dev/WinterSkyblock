@@ -1,7 +1,7 @@
 package de.crafty.winterskyblock.client.renderer.entity;
 
 
-import de.crafty.winterskyblock.client.model.ResourceSheepModel;
+import de.crafty.winterskyblock.client.model.entity.ResourceSheepModel;
 import de.crafty.winterskyblock.client.renderer.entity.layers.ResourceSheepFurLayer;
 import de.crafty.winterskyblock.entity.ResourceSheep;
 import de.crafty.winterskyblock.registry.EntityRegistry;

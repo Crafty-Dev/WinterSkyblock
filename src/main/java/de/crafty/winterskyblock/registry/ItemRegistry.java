@@ -111,26 +111,30 @@ public class ItemRegistry {
 
 
     public static final RegistryObject<Item> SNOW_CRYSTAL = REGISTRY.register("snow_crystal", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
-    public static final RegistryObject<Item> HEATED_SNOW_CRYSTAL = REGISTRY.register("heated_snow_crystal", () -> new Item(new Item.Properties().tab(WINTER_SKYBLOCK)));
+    public static final RegistryObject<Item> HEATED_SNOW_CRYSTAL = REGISTRY.register("heated_snow_crystal", () -> new Item(new Item.Properties().fireResistant().tab(WINTER_SKYBLOCK)));
 
 
     //Blocks
-    public static final RegistryObject<BlockItem> LEAF_PRESS = registerBlock(BlockRegistry.LEAF_PRESS, new Item.Properties().tab(WINTER_SKYBLOCK));
-    public static final RegistryObject<BlockItem> DRIED_LEAVES = registerBlock(BlockRegistry.DRIED_LEAVES, new Item.Properties().tab(WINTER_SKYBLOCK));
+    public static final RegistryObject<BlockItem> LEAF_PRESS = registerBlock(BlockRegistry.LEAF_PRESS, new Item.Properties());
+    public static final RegistryObject<BlockItem> DRIED_LEAVES = registerBlock(BlockRegistry.DRIED_LEAVES, new Item.Properties());
 
-    public static final RegistryObject<BlockItem> END_DIAMOND_ORE = registerBlock(BlockRegistry.END_DIAMOND_ORE, new Item.Properties().tab(WINTER_SKYBLOCK));
-    public static final RegistryObject<BlockItem> END_NETHERITE_ORE = registerBlock(BlockRegistry.END_NETHERITE_ORE, new Item.Properties().tab(WINTER_SKYBLOCK));
+    public static final RegistryObject<BlockItem> END_DIAMOND_ORE = registerBlock(BlockRegistry.END_DIAMOND_ORE, new Item.Properties());
+    public static final RegistryObject<BlockItem> END_NETHERITE_ORE = registerBlock(BlockRegistry.END_NETHERITE_ORE, new Item.Properties());
 
-    public static final RegistryObject<BlockItem> END_PORTAL_CORE = registerBlock(BlockRegistry.END_PORTAL_CORE, new Item.Properties().rarity(Rarity.EPIC).tab(WINTER_SKYBLOCK));
-    public static final RegistryObject<BlockItem> END_PORTAL_FRAME = registerBlock(BlockRegistry.END_PORTAL_FRAME, new Item.Properties().rarity(Rarity.RARE).tab(WINTER_SKYBLOCK));
+    public static final RegistryObject<BlockItem> END_PORTAL_CORE = registerBlock(BlockRegistry.END_PORTAL_CORE, new Item.Properties().rarity(Rarity.EPIC));
+    public static final RegistryObject<BlockItem> END_PORTAL_FRAME = registerBlock(BlockRegistry.END_PORTAL_FRAME, new Item.Properties().rarity(Rarity.RARE));
 
-    public static final RegistryObject<BlockItem> DRAGON_INFUSED_BEDROCK = registerBlock(BlockRegistry.DRAGON_INFUSED_BEDROCK, new Item.Properties().tab(WINTER_SKYBLOCK));
+    public static final RegistryObject<BlockItem> DRAGON_INFUSED_BEDROCK = registerBlock(BlockRegistry.DRAGON_INFUSED_BEDROCK, new Item.Properties());
 
-    public static final RegistryObject<BlockItem> GHAST_BLOCK = registerBlock(BlockRegistry.GHAST_BLOCK, new Item.Properties().rarity(Rarity.RARE).tab(WINTER_SKYBLOCK));
-    public static final RegistryObject<BlockItem> PHANTOM_BLOCK = registerBlock(BlockRegistry.PHANTOM_BLOCK, new Item.Properties().rarity(Rarity.RARE).tab(WINTER_SKYBLOCK));
+    public static final RegistryObject<BlockItem> GHAST_BLOCK = registerBlock(BlockRegistry.GHAST_BLOCK, new Item.Properties().rarity(Rarity.RARE));
+    public static final RegistryObject<BlockItem> PHANTOM_BLOCK = registerBlock(BlockRegistry.PHANTOM_BLOCK, new Item.Properties().rarity(Rarity.RARE));
 
-    public static final RegistryObject<BlockItem> MAGICAL_WORKBENCH = registerBlock(BlockRegistry.MAGICAL_WORKBENCH, new Item.Properties().rarity(Rarity.UNCOMMON).tab(WINTER_SKYBLOCK));
+    public static final RegistryObject<BlockItem> MAGICAL_WORKBENCH = registerBlock(BlockRegistry.MAGICAL_WORKBENCH, new Item.Properties().rarity(Rarity.UNCOMMON));
 
+    public static final RegistryObject<BlockItem> SNOW_CRYSTAL_BLOCK = registerBlock(BlockRegistry.SNOW_CRYSTAL_BLOCK, new Item.Properties());
+    public static final RegistryObject<BlockItem> HEATED_SNOW_CRYSTAL_BLOCK = registerBlock(BlockRegistry.HEATED_SNOW_CRYSTAL_BLOCK, new Item.Properties());
+
+    public static final RegistryObject<BlockItem> CRYSTAL_CRAFTING_PEDESTAL = registerBlock(BlockRegistry.CRYSTAL_CRAFTING_PEDESTAL, new Item.Properties());
 
     private static RegistryObject<BlockItem> registerBlock(RegistryObject<Block> block, Item.Properties properties){
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), properties.tab(WINTER_SKYBLOCK)));

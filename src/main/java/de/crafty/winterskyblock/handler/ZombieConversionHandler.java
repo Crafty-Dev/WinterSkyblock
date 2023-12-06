@@ -1,7 +1,10 @@
 package de.crafty.winterskyblock.handler;
 
+import de.crafty.winterskyblock.entity.FrozenZombie;
 import de.crafty.winterskyblock.registry.EntityRegistry;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Snowball;
@@ -20,7 +23,7 @@ public class ZombieConversionHandler {
     public void onZombieSnowball(LivingHurtEvent event){
 
 
-        if(!(event.getEntity() instanceof Zombie zombie))
+        if(!(event.getEntity() instanceof Zombie zombie) || !zombie.getType().equals(EntityType.ZOMBIE))
             return;
 
         if(!(event.getSource().isProjectile() && event.getSource().getDirectEntity() instanceof Snowball))
@@ -28,8 +31,16 @@ public class ZombieConversionHandler {
 
         Level level = zombie.getLevel();
 
-        if(!level.isClientSide()){
-            zombie.convertTo(EntityRegistry.FROZEN_ZOMBIE.get(), true);
+        if(!level.isClientSide() && level.getRandom().nextFloat() <= 0.25F){
+
+            CompoundTag oldTag = new CompoundTag();
+            zombie.save(oldTag);
+            zombie.discard();
+
+           FrozenZombie frozenZombie = EntityRegistry.FROZEN_ZOMBIE.get().create(level);
+           frozenZombie.load(oldTag);
+           frozenZombie.copyPosition(zombie);
+           level.addFreshEntity(frozenZombie);
         }
 
     }

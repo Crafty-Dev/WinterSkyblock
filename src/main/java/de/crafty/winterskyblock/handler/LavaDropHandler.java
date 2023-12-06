@@ -122,4 +122,6 @@ public class LavaDropHandler {
 
     public record LavaDrop(Supplier<Item> itemSupplier, int min, int max, float bonusChance, boolean dropSeperately) {
     }
+
+
 }

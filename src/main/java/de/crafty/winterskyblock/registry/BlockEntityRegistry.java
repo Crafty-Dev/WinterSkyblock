@@ -22,6 +22,7 @@ public class BlockEntityRegistry {
 
     public static final RegistryObject<BlockEntityType<MagicalWorkbenchBlockEntity>> MAGICAL_WORKBENCH = REGISTRY.register("magical_workbench", () -> BlockEntityType.Builder.of(MagicalWorkbenchBlockEntity::new, BlockRegistry.MAGICAL_WORKBENCH.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<CrystalCraftingPedestalBlockEntity>> CRYSTAL_CRAFTING_PEDESTAL = REGISTRY.register("crystal_crafting_pedestal", () -> BlockEntityType.Builder.of(CrystalCraftingPedestalBlockEntity::new, BlockRegistry.CRYSTAL_CRAFTING_PEDESTAL.get()).build(null));
 
     public static void register(IEventBus eventBus){
         REGISTRY.register(eventBus);

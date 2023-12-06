@@ -3,8 +3,10 @@ package de.crafty.winterskyblock.registry;
 import de.crafty.winterskyblock.WinterSkyblock;
 import de.crafty.winterskyblock.block.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,6 +38,10 @@ public class BlockRegistry {
     public static final RegistryObject<Block> PHANTOM_BLOCK = REGISTRY.register("phantom_block", () -> new Block(BlockBehaviour.Properties.of(Material.WOOL).sound(SoundType.SNOW).strength(1.0F)));
     public static final RegistryObject<Block> MAGICAL_WORKBENCH = REGISTRY.register("magical_workbench", MagicalWorkbenchBlock::new);
 
+    public static final RegistryObject<Block> SNOW_CRYSTAL_BLOCK = REGISTRY.register("snow_crystal_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.GLASS).strength(0.25F)));
+    public static final RegistryObject<Block> HEATED_SNOW_CRYSTAL_BLOCK = REGISTRY.register("heated_snow_crystal_block", () -> new HeatedSnowCrystalBlock(BlockBehaviour.Properties.copy(Blocks.GLASS).strength(0.25F)));
+
+    public static final RegistryObject<Block> CRYSTAL_CRAFTING_PEDESTAL = REGISTRY.register("crystal_crafting_pedestal", () -> new CrystalCraftingPedestalBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5F).noOcclusion()));
 
     //Non-Item
     public static final RegistryObject<Block> GRAVE_STONE = REGISTRY.register("grave_stone", GraveStoneBlock::new);
@@ -47,6 +53,10 @@ public class BlockRegistry {
 
 
     public static boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+        return false;
+    }
+
+    private static Boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos, EntityType<?> entityType) {
         return false;
     }
 }

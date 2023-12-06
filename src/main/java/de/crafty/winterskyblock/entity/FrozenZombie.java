@@ -4,14 +4,19 @@ import de.crafty.winterskyblock.registry.EntityRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 public class FrozenZombie extends Zombie {
 
-    private int ticksRemaining = 20 * 30;
+    private static final int TOTAL_LIFE_TICKS = 20 * 30;
+    private int ticksRemaining = TOTAL_LIFE_TICKS;
 
     public FrozenZombie(EntityType<? extends Zombie> entityType, Level level) {
         super(entityType, level);
@@ -26,6 +31,18 @@ public class FrozenZombie extends Zombie {
     @Override
     protected boolean convertsInWater() {
         return false;
+    }
+
+
+    @Override
+    public boolean hurt(DamageSource damageSource, float damage) {
+        if(!super.hurt(damageSource, damage))
+            return false;
+
+        if(damageSource.isProjectile() && damageSource.getDirectEntity() instanceof Snowball)
+            this.ticksRemaining = Math.min(TOTAL_LIFE_TICKS, this.ticksRemaining + 20 * 10);
+
+        return true;
     }
 
     @Override
@@ -60,7 +77,7 @@ public class FrozenZombie extends Zombie {
     }
 
     @Override
-    protected boolean isSunBurnTick() {
+    protected boolean isSunSensitive() {
         return false;
     }
 
@@ -84,8 +101,20 @@ public class FrozenZombie extends Zombie {
     private void checkRemainingTime(){
         if(this.ticksRemaining <= 0){
 
-                this.level.playLocalSound(this.position().x, this.position().y, this.position().z, SoundEvents.POWDER_SNOW_PLACE, SoundSource.HOSTILE, 1.0F, 1.0F, false);
-                this.convertToZombieType(EntityType.ZOMBIE);
+                CompoundTag oldTag = new CompoundTag();
+                this.save(oldTag);
+                this.discard();
+
+                Zombie zombie = EntityType.ZOMBIE.create(this.level);
+                zombie.load(oldTag);
+                zombie.copyPosition(this);
+                this.level.addFreshEntity(zombie);
+
         }
+    }
+
+    @Override
+    public float getSpeed() {
+        return this.level.isRaining() && this.level.getBiome(this.blockPosition()).get().coldEnoughToSnow(this.blockPosition()) ? super.getSpeed() * 1.5F : super.getSpeed() * 0.75F;
     }
 }

@@ -12,6 +12,7 @@ import de.crafty.winterskyblock.tweaks.CauldronInteractionTweaker;
 import de.crafty.winterskyblock.tweaks.DispenseItemBehaviorTweaker;
 import de.crafty.winterskyblock.util.ModCompostables;
 import de.crafty.winterskyblock.world.SpawnManager;
+import net.minecraft.client.resources.model.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -22,8 +23,11 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -32,13 +36,16 @@ import net.minecraftforge.registries.RegisterEvent;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Mod(WinterSkyblock.MODID)
 public class WinterSkyblock {
 
     public static final String MODID = "winterskyblock";
     public static final ResourceLocation JEI_RECIPE_GUI = new ResourceLocation(MODID, "textures/gui/winterskyblock_gui.png");
-
 
     public int islandCount;
     private static WinterSkyblock instance;
@@ -57,6 +64,7 @@ public class WinterSkyblock {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onRegistry);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerBlockEntityRenderers);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::postInit);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerTextures);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(EntityRegistry::registerAttributes);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(EntityRegistry::registerRenderers);
@@ -73,6 +81,7 @@ public class WinterSkyblock {
         MinecraftForge.EVENT_BUS.register(new LavaDropHandler());
         MinecraftForge.EVENT_BUS.register(new BlockTransformationHandler());
         MinecraftForge.EVENT_BUS.register(new BlockBreakHandler());
+        MinecraftForge.EVENT_BUS.register(new FireConversionHandler());
 
         MinecraftForge.EVENT_BUS.register(new ZombieConversionHandler());
 
@@ -91,6 +100,7 @@ public class WinterSkyblock {
         HammerDropHandler.bootstrap();
         LavaDropHandler.bootstrap();
         BlockTransformationHandler.bootstrap();
+        FireConversionHandler.bootstrap();
 
 
         ModCompostables.bootstrap();
@@ -135,6 +145,14 @@ public class WinterSkyblock {
         event.registerBlockEntityRenderer(BlockEntityRegistry.GRAVE_STONE.get(), GraveStoneRenderer::new);
         event.registerBlockEntityRenderer(BlockEntityRegistry.END_PORTAL_CORE.get(), EndPortalCoreRenderer::new);
         event.registerBlockEntityRenderer(BlockEntityRegistry.MAGICAL_WORKBENCH.get(), MagicalWorkbenchRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityRegistry.CRYSTAL_CRAFTING_PEDESTAL.get(), CrystalCraftingRenderer::new);
+    }
+
+
+    private void registerTextures(TextureStitchEvent.Pre event){
+        if(event.getAtlas().location().equals(InventoryMenu.BLOCK_ATLAS))
+            event.addSprite(CrystalCraftingRenderer.SPHERE_LOCATION.texture());
+
     }
 
     public static WinterSkyblock instance() {

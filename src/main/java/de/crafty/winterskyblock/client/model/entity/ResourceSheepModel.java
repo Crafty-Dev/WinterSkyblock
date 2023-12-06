@@ -1,4 +1,4 @@
-package de.crafty.winterskyblock.client.model;
+package de.crafty.winterskyblock.client.model.entity;
 
 
 import de.crafty.winterskyblock.entity.ResourceSheep;

@@ -1,8 +1,9 @@
 package de.crafty.winterskyblock.registry;
 
 import de.crafty.winterskyblock.WinterSkyblock;
-import de.crafty.winterskyblock.client.model.ResourceSheepFurModel;
-import de.crafty.winterskyblock.client.model.ResourceSheepModel;
+import de.crafty.winterskyblock.client.model.CrystalCraftingSphereModel;
+import de.crafty.winterskyblock.client.model.entity.ResourceSheepFurModel;
+import de.crafty.winterskyblock.client.model.entity.ResourceSheepModel;
 import de.crafty.winterskyblock.client.renderer.entity.FrozenZombieRenderer;
 import de.crafty.winterskyblock.client.renderer.entity.ResourceSheepRenderer;
 import de.crafty.winterskyblock.entity.FrozenZombie;
@@ -99,6 +100,7 @@ public class EntityRegistry {
         event.registerLayerDefinition(ModelLayers.FROZEN_ZOMBIE_OUTER_ARMOR, EntityRegistry::generic_zombie_outer_armor_layer);
         event.registerLayerDefinition(ModelLayers.FROZEN_ZOMBIE_OUTER_LAYER, () -> DrownedModel.createBodyLayer(new CubeDeformation(0.25F)));
 
+        event.registerLayerDefinition(ModelLayers.CRYSTAL_CRAFTING_SPHERE, CrystalCraftingSphereModel::createLayerDefinition);
     }
 
     private static LayerDefinition generic_zombie_layer(){
@@ -132,6 +134,8 @@ public class EntityRegistry {
 
         public static final ModelLayerLocation FROZEN_ZOMBIE_OUTER_LAYER = new ModelLayerLocation(new ResourceLocation(WinterSkyblock.MODID, "frozen_zombie"), "outer");
 
+
+        public static final ModelLayerLocation CRYSTAL_CRAFTING_SPHERE = new ModelLayerLocation(new ResourceLocation(WinterSkyblock.MODID, "crystal_crafting_sphere"), "main");
     }
 
 }

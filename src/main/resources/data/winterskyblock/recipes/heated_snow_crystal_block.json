@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "winterskyblock:heated_snow_crystal"
+    }
+  },
+  "result": {
+    "item": "winterskyblock:heated_snow_crystal_block",
+    "count": 1
+  }
+}

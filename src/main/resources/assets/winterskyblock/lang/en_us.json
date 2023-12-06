@@ -108,7 +108,9 @@
   "block.winterskyblock.ghast_block": "Mighty Block of the Flying Ghast",
   "block.winterskyblock.phantom_block": "Mystical Block of the Insidious Phantom",
   "block.winterskyblock.magical_workbench": "Magical Workbench",
-
+  "block.winterskyblock.snow_crystal_block": "Snow Crystal Block",
+  "block.winterskyblock.heated_snow_crystal_block": "Heated Snow Crystal Block",
+  "block.winterskyblock.crystal_crafting_pedestal": "Crystal Crafting Pedestal",
 
   "entity.winterskyblock.coal_sheep": "Coal Sheep",
   "entity.winterskyblock.iron_sheep": "Iron Sheep",
@@ -124,6 +126,8 @@
   "entity.winterskyblock.netherrack_sheep": "Netherrack Sheep",
   "entity.winterskyblock.glowstone_sheep": "Glowstone Sheep",
   "entity.winterskyblock.quartz_sheep": "Quartz Sheep",
+
+  "entity.winterskyblock.frozen_zombie": "Frozen Zombie",
 
 
   "gui.jei.category.lava_conversion": "Lava Conversion",

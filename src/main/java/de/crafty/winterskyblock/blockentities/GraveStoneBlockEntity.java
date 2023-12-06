@@ -95,6 +95,6 @@ public class GraveStoneBlockEntity extends BlockEntity {
 
     @Override
     public void handleUpdateTag(CompoundTag tag) {
-        this.playerProfile = NbtUtils.readGameProfile(tag.getCompound("playerProfile"));
+        this.load(tag);
     }
 }
