@@ -56,7 +56,6 @@ public class CrystalCraftingRenderer implements BlockEntityRenderer<CrystalCraft
 
         this.renderItem(blockEntity, partialTicks, poseStack, bufferSource, packedLight, packedOverlay);
         this.renderSphere(blockEntity, partialTicks, poseStack, bufferSource, packedLight, packedOverlay);
-
     }
 
 
@@ -66,29 +65,32 @@ public class CrystalCraftingRenderer implements BlockEntityRenderer<CrystalCraft
         if(stack.isEmpty())
             return;
 
-        poseStack.translate(0.5F, 1F, 0.5F);
+        poseStack.pushPose();
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        poseStack.translate(0.5F, 1.0F, 0.5F);
         poseStack.mulPose(Vector3f.YP.rotation((blockEntity.getIdleTick() + partialTicks) / 180.0F * Mth.PI));
-        this.itemRenderer.renderStatic(stack, ItemTransforms.TransformType.GROUND, packedLight, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, packedOverlay);
-
+        this.itemRenderer.renderStatic(stack, ItemTransforms.TransformType.FIXED, packedLight, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, packedOverlay);
+        RenderSystem.disableBlend();
+        poseStack.popPose();
     }
 
     private void renderSphere(CrystalCraftingPedestalBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay){
         float rotation = (blockEntity.getIdleTick() + partialTicks) / 180 * Mth.PI * 2;
 
-        poseStack.pushPose();
-        RenderSystem.enableDepthTest();
-        RenderSystem.disableCull();
         RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        poseStack.translate(0, -0.5F, 0);
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.disableDepthTest();
+        RenderSystem.depthMask(false);
+        poseStack.translate(0.5F, 0.35F, 0.5F);
         poseStack.scale(0.85F, 0.85F, 0.85F);
 
         this.sphereModel.setupAngles(rotation);
         VertexConsumer vertexConsumer = SPHERE_LOCATION.buffer(bufferSource, RenderType::entityTranslucent);
         this.sphereModel.render(poseStack, vertexConsumer, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.depthMask(true);
+        RenderSystem.enableDepthTest();
         RenderSystem.disableBlend();
-        RenderSystem.enableCull();
-        RenderSystem.disableDepthTest();
         poseStack.popPose();
     }
 }
